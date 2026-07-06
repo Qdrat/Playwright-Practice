@@ -6,9 +6,17 @@ test.describe('Охота в Web-таблицах', () => {
 
         const correct_line = await page
             .locator('table#table1 tbody tr')
-            .filter({ hasText: 'Doe' });
+            .filter({ hasText: 'Doe' })
 
-        expect(await correct_line.getByRole('cell', { name: 'Jason' }).textContent()).toBe('Jason');
-        expect(await correct_line.getByRole('cell', { name: '$100.00' }).textContent()).toBe('$100.00');
+        expect(
+            await correct_line
+                .getByRole('cell', { name: 'Jason' })
+                .textContent()
+        ).toBe('Jason')
+        expect(
+            await correct_line
+                .getByRole('cell', { name: '$100.00' })
+                .textContent()
+        ).toBe('$100.00')
     })
 })
