@@ -6,8 +6,8 @@ test.describe('Внедрение в iFrame', () => {
 
         const frame = page.frame({ name: 'firstFr' })
 
-        await frame.fill('input[name="fname"]', 'Hfdsf')
-        await frame.fill('input[name="lname"]', 'dasdasd')
+        await frame.locator('input[name="fname"]').fill('Hfdsf')
+        await frame.locator('input[name="lname"]').fill('dasdasd')
 
         await expect(frame.getByRole('paragraph')).toContainText(
             'You have entered Hfdsf dasdasd'
