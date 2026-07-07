@@ -33,19 +33,3 @@ export class PopupAlertsPage {
         await this.closeButton.click()
     }
 }
-// await page.locator('#button1').click();
-//   await page.locator('#button2').click();
-//   await page.getByRole('button', { name: 'Close' }).click();
-//   await page.locator('#button2').click();
-//   await page.getByRole('button', { name: '×' }).click();
-//   await page.getByRole('link', { name: 'CLICK ME!' }).click();
-//   await page.locator('#button1').click();
-//   await page.getByRole('button', { name: 'Close' }).click();
-//   await page.locator('#button1').click();
-//   await page.getByRole('button', { name: '×' }).click();
-//   page.once('dialog', dialog => {
-//     console.log(`Dialog message: ${dialog.message()}`);
-//     dialog.dismiss().catch(() => {});
-//   });
-//   await page.locator('#button4').click();
-// });
