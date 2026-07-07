@@ -8,15 +8,11 @@ test.describe('Охота в Web-таблицах', () => {
             .locator('table#table1 tbody tr')
             .filter({ hasText: 'Doe' })
 
-        expect(
-            await correct_line
-                .getByRole('cell', { name: 'Jason' })
-                .textContent()
-        ).toBe('Jason')
-        expect(
-            await correct_line
-                .getByRole('cell', { name: '$100.00' })
-                .textContent()
-        ).toBe('$100.00')
+        await expect(
+            correct_line.getByRole('cell', { name: 'Jason' })
+        ).toHaveText('Jason')
+        await expect(
+            correct_line.getByRole('cell', { name: '$100.00' })
+        ).toHaveText('$100.00')
     })
 })

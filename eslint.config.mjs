@@ -1,15 +1,26 @@
 import js from '@eslint/js'
 import globals from 'globals'
-import tseslint from 'typescript-eslint'
+import playwright from 'eslint-plugin-playwright'
 import { defineConfig } from 'eslint/config'
 
 export default defineConfig([
+    playwright.configs['flat/recommended'],
+
     {
-        files: ['**/*.{js,mjs,cjs,ts,mts,cts}'],
+        files: ['**/*.{js,mjs,cjs}'],
         plugins: { js },
         extends: ['js/recommended'],
-        languageOptions: { globals: { ...globals.browser, ...globals.node } },
+        languageOptions: {
+            globals: {
+                ...globals.browser,
+                ...globals.node,
+            },
+            sourceType: 'module',
+        },
     },
-    { files: ['**/*.js'], languageOptions: { sourceType: 'commonjs' } },
-    tseslint.configs.recommended,
+
+    {
+        files: ['**/*.cjs'],
+        languageOptions: { sourceType: 'commonjs' },
+    },
 ])

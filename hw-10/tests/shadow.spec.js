@@ -6,8 +6,6 @@ test.describe('Пробиваем Shadow DOM', () => {
 
         await page.locator('#buttonGenerate').click()
 
-        expect(
-            await page.locator('#editField.edit-field').inputValue()
-        ).not.toBe('')
+        await expect(page.locator('#editField.edit-field')).not.toHaveValue('')
     })
 })

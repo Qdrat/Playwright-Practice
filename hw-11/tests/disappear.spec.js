@@ -7,6 +7,6 @@ test.describe('Задача 2. Искусство исчезновения', () 
         await page.getByRole('button', { name: 'Remove' }).click()
 
         await expect(page.locator('.loading')).toBeHidden()
-        expect(await page.locator('#message').textContent()).toBe("It's gone!")
+        await expect(page.locator('#message')).toHaveText("It's gone!")
     })
 })

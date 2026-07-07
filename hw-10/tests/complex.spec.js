@@ -10,15 +10,13 @@ test.describe('Радио-баттоны и классические Dropdown', 
 
         await page.locator('input[type="radio"][value="yellow"]').check()
 
-        expect(
+        await expect(
             page.locator('input[type="radio"][value="yellow"]')
         ).toBeChecked()
-        expect(
+        await expect(
             page.locator('input[type="radio"][value="cabbage"]')
         ).toBeDisabled()
         // добавил проверку значения выбранного элемента в Dropdown
-        expect(await page.locator('#dropdowm-menu-1').inputValue()).toBe(
-            'python'
-        )
+        await expect(page.locator('#dropdowm-menu-1')).toHaveValue('python')
     })
 })
