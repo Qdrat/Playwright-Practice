@@ -43,4 +43,8 @@ test.describe(`hw-13`, () => {
             credentials[1].expectedError
         )
     })
+
+    test(`Задание 2: Проверка функции getFormattedDate()`, () => {
+        expect(getFormattedDate()).toMatch(/^\d{2}-\d{2}-\d{4}$/);
+    })
 })
