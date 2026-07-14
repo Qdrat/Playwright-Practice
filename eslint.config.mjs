@@ -24,6 +24,13 @@ export default defineConfig([
         languageOptions: { sourceType: 'commonjs' },
     },
     {
-    ignores: ['node_modules/', 'playwright-report/', 'test-results/', 'blob-report/', 'allure-report/', 'allure-results/'],
-  },
+        ignores: [
+            'node_modules/',
+            'playwright-report/',
+            'test-results/',
+            'blob-report/',
+            'allure-report/',
+            'allure-results/',
+        ],
+    },
 ])

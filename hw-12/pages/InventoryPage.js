@@ -6,6 +6,7 @@ export class InventoryPage {
 
         this.header = new Header(page)
         this.inventoryItem = page.locator('[data-test="inventory-item"]')
+        this.cartLink = page.locator('[data-test="shopping-cart-link"]')
     }
 
     async addItemToCart(itemName) {
@@ -13,5 +14,9 @@ export class InventoryPage {
             hasText: itemName,
         })
         await itemContainer.getByRole('button', { name: 'Add to cart' }).click()
+    }
+
+    async gotoCart() {
+        await this.cartLink.click()
     }
 }
