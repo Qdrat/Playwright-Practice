@@ -1,0 +1,95 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: hw-12/tests/popup_test.spec.js >> Задача 3. Работа со сложным UI >> модальные окна
+- Location: hw-12/tests/popup_test.spec.js:5:9
+
+# Error details
+
+```
+Test timeout of 30000ms exceeded.
+```
+
+```
+Error: locator.click: Test timeout of 30000ms exceeded.
+Call log:
+  - waiting for locator('#button2')
+    - waiting for" https://webdriveruniversity.com/.well-known/sgcaptcha/?r=%2FPopup-Alerts%2Findex.html&y=ipc:20.221.68.244:1789177855.733" navigation to finish...
+    - navigated to "https://webdriveruniversity.com/.well-known/sgcaptcha/?r=%2FPopup-Alerts%2Findex.html&y=ipc:20.221.68.244:1789177855.733"
+    - waiting for" https://webdriveruniversity.com/.well-known/captcha/?y=ipc:20.221.68.244:1789177855.733&r=%2FPopup-Alerts%2Findex.html" navigation to finish...
+    - navigated to "https://webdriveruniversity.com/.well-known/captcha/?y=ipc:20.221.68.244:1789177855.733&r=%2FPopup-Alerts%2Findex.html"
+
+```
+
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - img "Robot" [ref=e4]
+    - heading "Our system thinks you might be a robot!" [level=1] [ref=e5]
+    - paragraph [ref=e6]: We're really sorry about this, but it's getting harder and harder to tell the difference between humans and bots these days.
+    - generic [ref=e7]:
+      - paragraph [ref=e8]: Please complete the captcha below to prove you're a human and proceed to the page you're trying to reach.
+      - generic [ref=e9]:
+        - generic [ref=e11]:
+          - img "Retype the CAPTCHA code from the image" [ref=e13]
+          - generic [ref=e14]:
+            - link "Change the CAPTCHA code" [ref=e15] [cursor=pointer]:
+              - /url: "#"
+              - img "Change the CAPTCHA code" [ref=e16]
+            - link "Speak the CAPTCHA code" [ref=e17] [cursor=pointer]:
+              - /url: /.well-known/captcha/343/botdetect/?y=ipc:20.221.68.244:1789177855.733&get=sound&c=bd_captcha&t=888ee3f1ac61901a6998d010aac29918&sid=343&s=91cbd28857512faa890ac85fd1ea6c3e
+              - img "Speak the CAPTCHA code" [ref=e18]
+        - textbox [ref=e20]
+        - button "CONTINUE" [ref=e21]
+  - contentinfo [ref=e22]:
+    - paragraph [ref=e23]: This page requires cookies to be enabled in your browser settings. Please check this setting and enable cookies (if disabled). sid:343
+```
+
+# Test source
+
+```ts
+  1  | export class PopupAlertsPage {
+  2  |     constructor(page) {
+  3  |         this.page = page
+  4  | 
+  5  |         this.clickMeButton = page.locator('#button2')
+  6  |         this.closeButton = page.getByRole('button', { name: 'Close' })
+  7  | 
+  8  |         this.modal = page.locator('.modal-content')
+  9  |         this.modalTitle = page.locator('.modal-title')
+  10 |         this.modalText = page.locator('.modal-body')
+  11 |     }
+  12 | 
+  13 |     async open() {
+  14 |         await this.page.goto(
+  15 |             'https://webdriveruniversity.com/Popup-Alerts/index.html'
+  16 |         )
+  17 |     }
+  18 | 
+  19 |     async openModal() {
+> 20 |         await this.clickMeButton.click()
+     |                                  ^ Error: locator.click: Test timeout of 30000ms exceeded.
+  21 |     }
+  22 | 
+  23 |     async waitForModal() {
+  24 |         await this.modal.waitFor({ state: 'visible' })
+  25 |     }
+  26 | 
+  27 |     async getModalText() {
+  28 |         await this.waitForModal()
+  29 |         return await this.modalText.innerText()
+  30 |     }
+  31 | 
+  32 |     async closeModal() {
+  33 |         await this.closeButton.click()
+  34 |     }
+  35 | }
+  36 | 
+```
