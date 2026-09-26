@@ -1,0 +1,82 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: hw-10/tests/complex.spec.js >> Радио-баттоны и классические Dropdown >> Проверка работы радио-баттона
+- Location: hw-10/tests/complex.spec.js:4:9
+
+# Error details
+
+```
+Test timeout of 30000ms exceeded.
+```
+
+```
+Error: locator.selectOption: Test timeout of 30000ms exceeded.
+Call log:
+  - waiting for locator('#dropdowm-menu-1')
+    - waiting for" https://webdriveruniversity.com/.well-known/sgcaptcha/?r=%2FDropdown-Checkboxes-RadioButtons%2Findex.html&y=ipc:52.173.178.210:1790388940.752" navigation to finish...
+    - navigated to "https://webdriveruniversity.com/.well-known/sgcaptcha/?r=%2FDropdown-Checkboxes-RadioButtons%2Findex.html&y=ipc:52.173.178.210:1790388940.752"
+    - waiting for" https://webdriveruniversity.com/.well-known/captcha/?y=ipc:52.173.178.210:1790388940.752&r=%2FDropdown-Checkboxes-RadioButtons%2Findex.html" navigation to finish...
+    - navigated to "https://webdriveruniversity.com/.well-known/captcha/?y=ipc:52.173.178.210:1790388940.752&r=%2FDropdown-Checkboxes-RadioButtons%2Findex.html"
+
+```
+
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - img "Robot" [ref=e4]
+    - heading "Our system thinks you might be a robot!" [level=1] [ref=e5]
+    - paragraph [ref=e6]: We're really sorry about this, but it's getting harder and harder to tell the difference between humans and bots these days.
+    - generic [ref=e7]:
+      - paragraph [ref=e8]: Please complete the captcha below to prove you're a human and proceed to the page you're trying to reach.
+      - generic [ref=e9]:
+        - generic [ref=e11]:
+          - img "Retype the CAPTCHA code from the image" [ref=e13]
+          - generic [ref=e14]:
+            - link "Change the CAPTCHA code" [ref=e15]:
+              - /url: "#"
+              - img "Change the CAPTCHA code" [ref=e16]
+            - link "Speak the CAPTCHA code" [ref=e17]:
+              - /url: /.well-known/captcha/343/botdetect/?y=ipc:52.173.178.210:1790388940.752&get=sound&c=bd_captcha&t=3ca96d52008216a145557d7bc2c722a5&sid=343&s=25b096c916fb0398ce6d31a4e5ae092b
+              - img "Speak the CAPTCHA code" [ref=e18]
+        - textbox [ref=e20]
+        - button "CONTINUE" [ref=e21]
+  - contentinfo [ref=e22]:
+    - paragraph [ref=e23]: This page requires cookies to be enabled in your browser settings. Please check this setting and enable cookies (if disabled). sid:343
+```
+
+# Test source
+
+```ts
+  1  | import { test, expect } from '@playwright/test'
+  2  | 
+  3  | test.describe('Радио-баттоны и классические Dropdown', () => {
+  4  |     test('Проверка работы радио-баттона', async ({ page }) => {
+  5  |         await page.goto(
+  6  |             'https://webdriveruniversity.com/Dropdown-Checkboxes-RadioButtons/index.html'
+  7  |         )
+  8  | 
+> 9  |         await page.locator('#dropdowm-menu-1').selectOption('python')
+     |                                                ^ Error: locator.selectOption: Test timeout of 30000ms exceeded.
+  10 | 
+  11 |         await page.locator('input[type="radio"][value="yellow"]').check()
+  12 | 
+  13 |         await expect(
+  14 |             page.locator('input[type="radio"][value="yellow"]')
+  15 |         ).toBeChecked()
+  16 |         await expect(
+  17 |             page.locator('input[type="radio"][value="cabbage"]')
+  18 |         ).toBeDisabled()
+  19 |         // добавил проверку значения выбранного элемента в Dropdown
+  20 |         await expect(page.locator('#dropdowm-menu-1')).toHaveValue('python')
+  21 |     })
+  22 | })
+  23 | 
+```
